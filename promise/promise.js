@@ -1,33 +1,46 @@
 class Promise {
     constructor(executor) {
-        this.status = 'pending'
-        this.value = undefined
-        this.reason = undefined
+        this.status = 'pending' // 初始化状态
+        this.value = undefined // 初始化成功返回的值
+        this.reason = undefined // 初始化失败返回的原因
 
-        this.onResolvedCallbacks = []
-        this.onRejectedCallbacks = []
+        // 解决处理异步的resolve
+        this.onResolvedCallbacks = [] // 存放所有成功的resolve
+        this.onRejectedCallbacks = [] // 存放所有失败的reject
 
-        const resolve = (value) => {
+        /**
+         * @param {*} value 成功返回值
+         * 定义resolve方法
+         * 注意：状态只能从pending->fulfilled和pending->rejected两个
+         */
+        const resolve = (value) => { 
             if(this.status === 'pending') {
-                this.status = 'fulfilled'
-                this.value = value
+                this.status = 'fulfilled' // 成功时将状态转换为成功态fulfilled
+                this.value = value // 将成功返回的值赋值给promise
+                // 为了解决异步resolve以及返回多层promise
                 this.onResolvedCallbacks.forEach(fn => {
-                    fn()
+                    fn() // 当状态变为成功态依次执行所有的resolve函数
                 })
             }
         }
         const reject = (reason) => {
             if(this.status === 'pending') {
-                this.status = 'rejected'
-                this.reason = reason
+                this.status = 'rejected' // 失败时将状态转换为成功态失败态rejected
+                this.reason = reason // 将失败返回的原因赋值给promise
                 this.onRejectedCallbacks.forEach(fn => {
-                    fn()
+                    fn() // 当状态变为失败态依次执行所有的reject函数
                 })
             }
         }
-        executor(resolve, reject)
+        executor(resolve, reject) // 执行promise传的回调函数
     }
+    /**
+     * 定义promise的then方法 
+     * @param {*} onFulfilled 成功的回调
+     * @param {*} onRejected 失败的回调
+     */
     then(onFulfilled, onRejected) {
+        // 为了解决then方法返回Promise的情况
         const promise2 = new Promise((resolve, reject) => {
             if(this.status === 'fulfilled') { // 如果状态为fulfilled时则将值传给这个成功的回调
                 setTimeout(() => {
@@ -63,7 +76,7 @@ class Promise {
 
 const resolvePromise = (promise2, x, resolve, reject) => {
     // console.log(promise2, x, resolve, reject)
-    if(promise2 === x) {
+    if(promise2 === x) { // 如果返回的值与then方法返回的值相同时
         throw TypeError('循环引用')
     }
     // 判断x是不是promise;注意：null的typeof也是object要排除
