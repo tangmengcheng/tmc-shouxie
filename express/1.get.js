@@ -15,6 +15,6 @@ app.post('/age', function(req, res) {
 })
 
 // all 代表的是匹配所有的方法，* 表示匹配所有的路径；一定要放在最底部
-app.listen(3000, () => {
-    console.log(`Server start port at 3000`);
+app.listen(3001, () => {
+    console.log(`Server start port at 3001`);
 })
