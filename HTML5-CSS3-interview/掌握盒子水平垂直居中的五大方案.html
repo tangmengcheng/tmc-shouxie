@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .box {
+            box-sizing: border-box;
+            width: 100px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 16px;
+            border: 1px solid lightblue;
+            background: lightcyan;
+        }
+        /* 方式一: 定位 */
+        /* .box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -50px;
+            margin-top: -25px;
+        } */
+        /* 
+            上面的方式是一定要知道具体的宽高
+            但下面的方式是知道宽高，但是没有用到宽高
+         */
+        /* .box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        } */
+
+        /* 这种方式是不需要知道具体宽高的，但是兼容性不是很好 */
+        /* .box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50% -50%);
+        } */
+
+        /* 方式二： flex;这种方式也是兼容性不是很好 */
+        /* body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        } */
+
+        /* 方式三：JavaScript */
+
+        /* 方式四：table-cell  控制文本的 */
+        /* 注意：此方法一定要求父级有固定宽高；百分比不是固定宽高 */
+        body {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+        /* 将盒子变为行内块元素 */
+        .box {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="box">
+        石小明
+    </div>
+    <script>
+        // 注意：id可以直接当做DOM元素，不需要通过getElementById获取
+        // 获取当前屏幕的宽和高，再获取盒子的宽和高，减去除以二
+        // let html = document.documentElement,
+        //     winW = html.clientWidth,
+        //     winH = html.clientHeight,
+        //     boxW = box.offsetWidth, // offsetWidth带边框
+        //     boxH = box.offsetHeight;
+
+        //     box.style.position = 'absolute';
+        //     box.style.left = (winW - boxW) / 2 + 'px';
+        //     box.style.top = (winH - boxH) / 2 + 'px';
+    </script>
+</body>
+</html>
