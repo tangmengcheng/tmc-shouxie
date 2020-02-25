@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let obj = {
+            a: 100,
+            b: [100, 200, 300],
+            c: {
+                x: 10
+            },
+            d: /^\d+$/
+        }
+        // 浅克隆 只克隆第一层
+        // let obj2 = {...obj};
+        let obj2 = {};
+        for(let key in obj) {
+            if(!obj.hasOwnProperty(key)) break;
+            obj2[key] = obj[key];
+        }
+
+        // 深克隆
+        let obj3 = JSON.parse(JSON.stringify(obj)); // 项目中常使用
+        // 注意：在函数、日期、正则表达式时，JSON.stringify时，都会被转换成对象{}
+        // JSON.stringify(a:function(){}, x: 1000); ====> 
+        // JSON.stringify(a: new Date()); ====> 
+
+        function deepClone(obj) {
+            // 过滤一些特殊情况
+            if(obj === null) return null;
+            if(typeof obj !== "object") return obj;
+            if(obj instanceof RegExp) { // 正则
+                return new RegExp(obj);
+            }
+            if(obj instanceof Date) { // 日期
+                return new Date(obj);
+            }
+
+            // let newObj = {}
+            // let newObj = new Object()
+            let newObj = new obj.constructor; // 不直接创建空对象的目的：克隆的结果和之前保持所属类  =》 即能克隆普通对象，又能克隆某个实例对象
+            for(let key in obj) {
+                if(obj.hasOwnProperty(key)) {
+                    newObj[key] = deepClone(obj[key]);
+                }
+            }
+            return newObj;
+        }
+
+
+    </script>
+</body>
+</html>
