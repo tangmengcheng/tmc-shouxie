@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let arr1 = [
+            {id: 1, name: '汤小梦'},
+            {id: 2, name: '石小明'},
+            {id: 3, name: '前端开发'},
+            {id: 1, name: 'web前端'}
+        ];
+        let arr2 = [1, 2, 3, 2, 33, 55, 66, 3, 55];
+        // let newArr = [];
+        // arr2.forEach(item => {
+        //     if(newArr.indexOf(item) == '-1') {
+        //         newArr.push(item);
+        //     }
+        // })
+        // console.log(newArr);
+        let newArr = [...new Set(arr2)];
+        console.log(newArr);
+        const unique = (arr, key) => {
+            return [...new Map(arr.map(item => [item[key], item])).values()]
+        }
+        console.log(unique(arr1, 'id'));
+        let arr3 = ['a', 'b'];
+        let arr4 = ['c', 'd'];
+        let arr5 = arr3.concat(arr4);
+        console.log(arr5);
+        let arr6 = [...arr3, ...arr4];
+        console.log(arr6);
+
+        // 数组展平
+        let arr7 = [1, 2, [3, 4], [5, 6, [7, 8, 9]]];
+        // let arrNew = arr7.flat(Infinity);
+        // let arrNew = arr7.join().split(',').map(Number);
+        let arrNew = arr7.toString().split(',').map(Number);
+        console.log(arrNew);
+        const flattern = (arr) => {
+            const result = []
+            arr.forEach((item) => {
+                if (Array.isArray(item)) {
+                    result.push(...flat(item))
+                } else {
+                    result.push(item)
+                }
+            })
+            return result
+        }
+        flattern(arr7);
+    </script>
+</body>
+</html>
